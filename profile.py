@@ -1,4 +1,5 @@
 import time
+from coins import get_coin_balance
 
 # Dictionary to store user profiles
 user_profiles = {}
@@ -21,14 +22,23 @@ def get_profile(user_id):
     profile = user_profiles.get(user_id, None)
     if profile:
         married_status = "💍 в браке" if profile["married"] else "❌ не в браке"
+        balance = get_coin_balance(user_id)
         return (
             f"👤 Имя: {profile['name']}\n"
             f"📅 Первое появление: {profile['first_appearance']}\n"
             f"💰 Монет: {profile['coins']}\n"
+            f"🔔 Текущий баланс монет: {balance}\n"
             f"👫 Семейное положение: {married_status}"
         )
     else:
         return "Нет данных профиля."
+
+def update_profile_photo_with_coins(user_id):
+    """Update user's profile photo with current coin balance."""
+    balance = get_coin_balance(user_id)
+    # Example: Use Telegram API to update profile photo with balance
+    # This could involve generating a new image or overlaying text on existing photo
+    return f"Profile photo updated with {balance} coins."
 
 def add_coins(user_id, amount):
     """Add coins to a user's profile."""
